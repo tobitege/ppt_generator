@@ -1,0 +1,4 @@
+streamlit
+python-pptx
+requests
+langchain==0.1.20
