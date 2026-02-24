@@ -57,6 +57,11 @@ run the streamlit app
 streamlit run main.py
 ```
 
+In the UI, set:
+- Topic
+- Number of content slides
+- Extra instructions (optional)
+
 or use the PowerShell helper script
 
 ```powershell
@@ -65,4 +70,10 @@ or use the PowerShell helper script
 
 # Ollama
 .\run-ppt-generator.ps1 -Provider ollama
+
+# stop app on default port 8501
+.\stop-ppt-generator.ps1
+
+# stop app on custom port
+.\stop-ppt-generator.ps1 -Port 8502
 ```
