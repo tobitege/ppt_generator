@@ -224,3 +224,5 @@ Logs/
 __pycache__
 .venv
 .history
+.llm_profiles.json
+.presentation_history/

@@ -2,29 +2,51 @@
 
 A local LLM assisted ppt generation tool
 
-## Why  
+![Clean UI](ppt_generator.png)
+
+## Enhanced version
+
+This fork by @tobitege adds a more practical, user-friendly generator flow:
+
+- Live progress message + progress bar during generation
+- Enter key submits generation (form-based UI)
+- Configurable number of content slides
+- Optional extra instructions field for style/constraints
+- Sidebar LLM settings (provider, base URL, model, API key)
+- Profile-based LLM configs (save multiple provider/model/base URL setups)
+- API keys are stored encrypted per profile via OS keychain (`keyring`)
+- OpenAI SDK-based provider calls with retries, timeout, and request pacing
+- LM Studio and Ollama are both supported via OpenAI-compatible endpoints
+- Better runtime error messages in the UI
+- Helper scripts for start/stop:
+  - `run-ppt-generator.ps1`
+  - `stop-ppt-generator.ps1`
+
+## Original author's message  
 
 Writing presentations for course assignments is just boilerplate work most often, especially when even the lecturers dont even care about it.
 Thats why I automated the boilerplate work, just enter a topic and the tool generates a simple presentation , enough to satisfy the base course requirement.
 
 ## Running Locally
 
-This app supports two providers:
+This app supports three providers:
 
 - `ollama`
 - `lm_studio` (LM Studio v1 REST API)
+- `openai_compat`
 
 clone the repo and move into the directory
 
 ```sh
-git clone https://github.com/Govind-S-B/ppt_generator.git
+git clone https://github.com/tobitege/ppt_generator.git
 cd ppt_generator
 ```
 
-install the required python dependencies
+install dependencies with `uv` (recommended)
 
-```sh
-pip install -r requirements.txt
+```powershell
+uv venv
+uv pip install --python .venv\Scripts\python.exe -r requirements.txt
 ```
 
 optional: set environment variables
@@ -53,14 +75,16 @@ $env:PPT_POINT_COUNT="4"
 
 run the streamlit app
 
-```sh
-streamlit run main.py
+```powershell
+.\.venv\Scripts\streamlit.exe run main.py
 ```
 
-In the UI, set:
+In the UI, create/select a profile and set:
+
 - Topic
 - Number of content slides
 - Extra instructions (optional)
+- Provider label / Model / Base API URL / API key (encrypted per profile)
 
 or use the PowerShell helper script
 
@@ -70,6 +94,9 @@ or use the PowerShell helper script
 
 # Ollama
 .\run-ppt-generator.ps1 -Provider ollama
+
+# OpenAI-compatible (example)
+.\run-ppt-generator.ps1 -Provider openai_compat -BaseUrl https://api.openai.com/v1 -Model gpt-4o-mini -ApiKey <YOUR_KEY>
 
 # stop app on default port 8501
 .\stop-ppt-generator.ps1
